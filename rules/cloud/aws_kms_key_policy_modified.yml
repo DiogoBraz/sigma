@@ -1,0 +1,22 @@
+title: AWS KMS Key policy has been modified
+id: 81a27b26-35f1-4ab4-9f03-83024a232c05
+status: experimental
+description: An AWS KMS key policy has been created or modified. Since there is no currently available method to detect if an AWS KMS key was either newly created or an existing one updated, it's important to review the AWS KMS key policies currently in use for any new policies or modification of existing policies.
+references:
+    - https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-modifying.html    
+    - https://docs.aws.amazon.com/kms/latest/developerguide/control-access-overview.html
+    - https://docs.aws.amazon.com/kms/latest/developerguide/determining-access-key-policy.html
+author: Diogo Braz
+date: 2020/04/16
+tags:
+    - attack.credential_access    
+    - attack.t1098
+level: high
+logsource:
+    service: cloudtrail
+detection:
+    selection:            
+        event.outcome(script processor): 'success'             
+        eventName: 'PutKeyPolicy'
+        eventSource: 'kms.amazonaws.com'
+    condition: selection

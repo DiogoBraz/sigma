@@ -1,0 +1,23 @@
+title: AWS VPC Traffic Mirror Target created
+id: 9df69500-ccd7-4c9c-837e-fed085ff6c5a
+status: experimental
+description: An AWS VPC Traffic Mirror Target has been created. This process by itself does not pose any risk other than enabling the follow up modification of existing Traffic Mirror sessions or creation of new sessions, which in the event that the new Traffic Mirror target is controlled by a malicious party, exfiltration of traffic will take place. While this operation is often performed under normal operations (often related to Network Intrusion Detection), there are reported cases of abuse of this feature for exfiltration.
+references:
+    - https://docs.aws.amazon.com/vpc/latest/mirroring/what-is-traffic-mirroring.html
+    - https://docs.aws.amazon.com/vpc/latest/mirroring/traffic-mirroring-session.html
+author: Diogo Braz
+date: 2020/04/16
+tags:
+    - attack.discovery    
+    - attack.t1046      
+    - attack.t1135
+    - attack.t1040
+level: medium
+logsource:
+    service: cloudtrail
+detection:
+    selection:
+        event.outcome(script processor): 'success'             
+        eventName: 'CreateTrafficMirrorTarget'        
+        eventSource: 'ec2.amazonaws.com'
+    condition: selection

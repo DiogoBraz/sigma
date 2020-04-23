@@ -1,0 +1,22 @@
+title: AWS EC2 VM Export succeeded
+id: cf1db532-b181-4d70-8bd5-d01b9fc61f34
+status: experimental
+description: A successful export of an AWS EC2 instance has been detected. A VM Export might indicate an attempt to extract information from an instance. This method is rarely used during normal operations so an immediate response is recommended. An appropriate follow up action is to review AWS S3 uploads/writes, as EC2 VM Export utilizes an AWS S3 bucket for storage of the exported VM.
+references:
+    - https://docs.aws.amazon.com/vm-import/latest/userguide/vmexport.html#export-instance    
+author: Diogo Braz
+date: 2020/04/16
+tags:
+    - attack.collection    
+    - attack.t1005      
+    - attack.exfiltration
+    - attack.t1537
+level: high
+logsource:
+    service: cloudtrail
+detection:
+    selection:            
+        event.outcome(script processor): 'success'             
+        eventName: 'CreateInstanceExportTask'
+        eventSource: 'ec2.amazonaws.com'
+    condition: selection

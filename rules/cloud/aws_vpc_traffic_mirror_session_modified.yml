@@ -1,0 +1,23 @@
+title: AWS VPC Traffic Mirror Session modified
+id: 8a438485-96a1-48a2-94a4-48a656939807
+status: experimental
+description: An AWS VPC Traffic Mirror Session has been modified. This event might indicate an attempt to bypass detection by the Network Intrusion Detection System (NIDS) by altering where the traffic is sent (by effectively sending it to a Traffic Target not prepared to act as a NIDS). It is also possible this event is done in order to perform exfiltration or network sniffing by modifying network traffic mirroring to a server under the control of a malicious party.
+references:
+    - https://docs.aws.amazon.com/vpc/latest/mirroring/what-is-traffic-mirroring.html
+    - https://docs.aws.amazon.com/vpc/latest/mirroring/traffic-mirroring-session.html
+author: Diogo Braz
+date: 2020/04/16
+tags:
+    - attack.discovery    
+    - attack.t1046      
+    - attack.t1135
+    - attack.t1040
+level: critical
+logsource:
+    service: cloudtrail
+detection:
+    selection:
+        event.outcome(script processor): 'success'             
+        eventName: 'ModifyTrafficMirrorSession'        
+        eventSource: 'ec2.amazonaws.com'
+    condition: selection

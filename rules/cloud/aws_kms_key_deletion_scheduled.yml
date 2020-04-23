@@ -1,0 +1,20 @@
+title: AWS KMS Key deletion scheduled
+id: 2fb8f662-34ff-43ae-b527-04a02f816533
+status: experimental
+description: An AWS KMS key has been scheduled for deletion. It is important to follow up with this alert as some resources might become unavailable (including the data in them) when the key deletion threshold is reached.
+references:
+    - https://docs.aws.amazon.com/kms/latest/developerguide/deleting-keys.html    
+author: Diogo Braz
+date: 2020/04/16
+tags:
+    - attack.impact    
+    - attack.t1496
+level: high
+logsource:
+    service: cloudtrail
+detection:
+    selection:            
+        event.outcome(script processor): 'success'             
+        eventName: 'ScheduleKeyDeletion'
+        eventSource: 'kms.amazonaws.com'
+    condition: selection

@@ -1,0 +1,21 @@
+title: Bucket detected without Block Public Access
+id: 2f563e1a-404c-4430-978a-a9aaf05c4f5e
+status: experimental
+description: An AWS S3 bucket without public block protection has been detected. Without this permission enabled the permission of individual files in the bucket might be modified, so even though an AWS S3 bucket might not be public, the files in it, might.
+references:
+    - https://aws.amazon.com/blogs/aws/amazon-s3-block-public-access-another-layer-of-protection-for-your-accounts-and-buckets/
+author: Diogo Braz
+date: 2020/04/16
+tags:
+    - attack.collection    
+    - attack.t1530      
+    - attack.exfiltration
+    - attack.t1537
+level: medium
+logsource:
+    service: cloudtrail
+detection:
+    selection:
+        eventSource: 's3.amazonaws.com'
+        errorCode: 'NoSuchPublicAccessBlockConfiguration'     
+    condition: selection

@@ -1,0 +1,19 @@
+title: Guard Duty Create Threat Intel Set
+id: 7cac285b-5dec-45f7-9c5c-571c49db01ec
+status: experimental
+description: Create a new ThreatIntelSet. ThreatIntelSets consist of known malicious IP addresses. GuardDuty generates findings based on ThreatIntelSets. Only users of the master account can use this operation.
+references:
+    - https://docs.aws.amazon.com/cli/latest/reference/guardduty/create-threat-intel-set.html
+author: Diogo Braz
+date: 2020/04/16
+tags:
+    - 
+level: medium
+logsource:
+    service: cloudtrail
+detection:
+    selection:
+        event.kind(set processor): 'event'
+        event.outcome(script processor): 'success'
+        eventName: 'CreateThreatIntelSet'
+    condition: selection

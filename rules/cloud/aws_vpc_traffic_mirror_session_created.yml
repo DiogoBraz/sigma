@@ -1,0 +1,23 @@
+title: AWS VPC Traffic Mirror Session created
+id: 98cb9ced-c871-4f9a-bffa-5751ddda4688
+status: experimental
+description: An AWS VPC Traffic Mirror Session has been created. While this operation is often performed under normal operations (often related to Network Intrusion Detection), there are reported cases of abuse of this feature for exfiltration by mirroring traffic to a Target controlled by a malicious party. It is important to follow up to determine if the Traffic Target (where network traffic is being mirrored to) is the Target where the Network Intrusion Detection System (NIDS) is running.
+references:
+    - https://docs.aws.amazon.com/vpc/latest/mirroring/what-is-traffic-mirroring.html
+    - https://docs.aws.amazon.com/vpc/latest/mirroring/traffic-mirroring-session.html
+author: Diogo Braz
+date: 2020/04/16
+tags:
+    - attack.discovery    
+    - attack.t1046      
+    - attack.t1135
+    - attack.t1040
+level: medium
+logsource:
+    service: cloudtrail
+detection:
+    selection:
+        event.outcome(script processor): 'success'             
+        eventName: 'CreateTrafficMirrorSession'        
+        eventSource: 'ec2.amazonaws.com'
+    condition: selection

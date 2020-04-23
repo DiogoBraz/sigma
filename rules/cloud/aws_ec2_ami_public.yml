@@ -1,0 +1,26 @@
+title: AWS EC2 AMI shared publicly
+id: c83cae72-4937-4317-86e5-f9047b798de7
+status: experimental
+description: The atributes of an EC2 AMI have been modified to allow public usage of the image.
+references:
+    - https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/sharingamis-intro.html
+    - https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/building-shared-amis.html
+    - https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/usingsharedamis-finding.html     
+author: Diogo Braz
+date: 2020/04/16
+tags:
+    - attack.collection    
+    - attack.t1005      
+    - attack.exfiltration
+    - attack.t1537
+level: high
+logsource:
+    service: cloudtrail
+detection:
+    selection:
+        event.kind(set processor): 'event'                
+        event.outcome(script processor): 'success'             
+        eventName: 'ModifyImageAttribute'
+        eventSource: 'ec2.amazonaws.com'
+        requestParameters: 'group=all'
+    condition: selection

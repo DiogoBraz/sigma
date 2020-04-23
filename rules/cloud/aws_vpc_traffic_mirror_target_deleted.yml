@@ -1,0 +1,23 @@
+title: AWS VPC Traffic Mirror Target deleted
+id: 2f477db5-7dff-45ab-91da-faf19b1269fb
+status: experimental
+description: An AWS VPC Traffic Mirror Target has been deleted. An immediate follow up of this event is crucial as this might indicate an attempt to remove visibility over network traffic from the Network Intrusion Detection System (NIDS) by deleting the Traffic Mirror Target where the NIDS software is running.
+references:
+    - https://docs.aws.amazon.com/vpc/latest/mirroring/what-is-traffic-mirroring.html
+    - https://docs.aws.amazon.com/vpc/latest/mirroring/traffic-mirroring-session.html
+author: Diogo Braz
+date: 2020/04/16
+tags:
+    - attack.discovery    
+    - attack.t1046      
+    - attack.t1135
+    - attack.t1040
+level: critical
+logsource:
+    service: cloudtrail
+detection:
+    selection:
+        event.outcome(script processor): 'success'             
+        eventName: 'DeleteTrafficMirrorTarget'        
+        eventSource: 'ec2.amazonaws.com'
+    condition: selection

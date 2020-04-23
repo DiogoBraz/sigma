@@ -1,0 +1,23 @@
+title: AWS VPC Traffic Mirror Filter deleted
+id: f438d4e9-fb02-484c-9aec-cef35c76893b
+status: experimental
+description: An AWS VPC Traffic Mirror Filter has been deleted. The removal of a Mirror Filter might be related to an attempt to bypass detection mechanisms by limiting the information that is sent to the Network Intrusion Detection System (NIDS).
+references:
+    - https://docs.aws.amazon.com/vpc/latest/mirroring/what-is-traffic-mirroring.html
+    - https://docs.aws.amazon.com/vpc/latest/mirroring/traffic-mirroring-filter.html
+author: Diogo Braz
+date: 2020/04/16
+tags:
+    - attack.discovery    
+    - attack.t1046      
+    - attack.t1135
+    - attack.t1040
+level: critical
+logsource:
+    service: cloudtrail
+detection:
+    selection:
+        event.outcome(script processor): 'success'             
+        eventName: 'DeleteTrafficMirrorFilter'        
+        eventSource: 'ec2.amazonaws.com'
+    condition: selection

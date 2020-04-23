@@ -1,0 +1,20 @@
+title: Guard Duty Archive Findings
+id: 0bbe0c07-c0b9-4752-b915-d8c9c2408b31
+status: experimental
+description: Detects when GuardDuty findings are archived. Possible indicator of malicious activity in order to maintain unauthorized access.
+references:
+    - https://docs.aws.amazon.com/cli/latest/reference/guardduty/archive-findings.html
+author: Diogo Braz
+date: 2020/04/15
+tags:
+    - attack.persistence
+    - attack.t1098
+level: medium
+logsource:
+    service: cloudtrail
+detection:
+    selection:
+        event.kind(set processor): 'event'
+        event.outcome(script processor): 'success'
+        eventName: 'ArchiveFindings'
+    condition: selection

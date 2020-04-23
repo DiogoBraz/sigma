@@ -1,0 +1,23 @@
+title: AWS VPC Traffic Mirror Filter modified
+id: ddbe147e-5acd-4656-998c-ac1adfc9c7bb
+status: experimental
+description: An AWS VPC Traffic Mirror Filter has been modified. The modification of a filter might be related to an attempt to either bypass detection mechanisms (by limiting the information that is sent to the network intrusion detection system) or inclusion of additional sources, destinations, ports and/or protocols in an attempt to exfiltrate information if the Traffic Mirror Target is compromised.
+references:
+    - https://docs.aws.amazon.com/vpc/latest/mirroring/what-is-traffic-mirroring.html
+    - https://docs.aws.amazon.com/vpc/latest/mirroring/traffic-mirroring-filter.html 
+author: Diogo Braz
+date: 2020/04/16
+tags:
+    - attack.discovery    
+    - attack.t1046      
+    - attack.t1135
+    - attack.t1040
+level: high
+logsource:
+    service: cloudtrail
+detection:
+    selection:
+        event.outcome(script processor): 'success'             
+        eventName: 'ModifyTrafficMirrorFilterRule'        
+        eventSource: 'ec2.amazonaws.com'
+    condition: selection
